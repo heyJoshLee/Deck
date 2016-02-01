@@ -1,51 +1,63 @@
 $(function(){
-  var templates = {};
-  // Check for local storage, if none set to empty array
-  var todos = JSON.parse(localStorage.getItem("todo_items")) || [];
-  function Todo(params) {
-    this.title = params.title;
-    this.id = todos.length;
-  };
 
-  // Create examples if there are no todos
-  if (todos.length < 1) {
-    todos.push(new Todo({title: "Example 1"}));
-    todos.push(new Todo({title: "Example 2"}));
-    console.log("Creating sample items");
+  var suits = ["hearts", "diamonds", "spades", "clubs"];
+
+  var deck = {
+    cards: [],
+    show_card: function() {
+      return this.cards.length === 52 ? false : true;
+    },
+
+    createDeck: function(){
+      self = this;
+      suits.forEach(function(suit) {
+        for(var i = 1; i <= 13; i ++) {
+          var value;
+          if (i === 1)             { value = "ace"; } 
+          else if (i > 1 && i < 11) { value = i; } 
+          else if (i === 11)       { value = "jack"; } 
+          else if (i === 12)       { value = "queen"; } 
+          else if (i === 13)       { value = "king"; }
+          self.cards.push(value + " of " + suit);
+        }
+      });
+    },
+
+    drawCard: function() {
+      var random_number = Math.floor(Math.random() * this.cards.length),
+          random_card = this.cards[random_number];
+      this.cards.splice(random_number, 1);
+      console.log(deck.cards.length);
+      this.current_suit = random_card.split(" ")[2];
+      this.current_value = random_card.split(" ")[0];
+      this.graveyard.push({number: this.graveyard.length + 1, name: random_card});
+      return random_card
+    },
+
+    graveyard: []
+  }; 
+  
+  var playarea = Handlebars.compile($("#playarea_t").html());
+  $("#draw_card").click(function(e) {
+    e.preventDefault();
+    deck.drawCard();
+    updateHTML();
+  });
+
+  function updateHTML() {
+    $("#playarea").html(playarea(deck));
   }
 
-  $("[type*=x-handlebars-template]").each(function(){
-    $template = $(this);
-    templates[$template.attr("id")] = Handlebars.compile($template.html());
-  });
-
-  Handlebars.registerPartial("todo", $("#todo").html());
-
-  function updateTodos(){
-    $("#todos_container").html(templates.all_todos({todos: todos}));
-  };
-
-  $("form").on("submit", function(e) {
+  $("#shuffle").click(function(e) {
     e.preventDefault();
-    var todo_title = $("#todo_name").val();
-    todos.push(new Todo({title: todo_title}));
-    $("#todo_name").val("");
-    updateTodos();
+    deck.cards = [];
+    current_suit: "";
+    current_value: "";
+    deck.graveyard = [];
+    deck.createDeck();
+    updateHTML();
   });
-
-  $("#todos_container").on("click", "a.remove", function(e){
-    e.preventDefault();
-    var want_to_delete = confirm("Are you sure you want to delete this todo?");
-    if (want_to_delete) {
-      $(this).parent().remove();
-      todos.splice($(this).attr("id"), 1);
-    }
-  });
-
-  updateTodos();
-
-  $(window).unload(function() {
-    localStorage.setItem("todo_items", JSON.stringify(todos));
-  });
-
+  
+  deck.createDeck();
+  updateHTML();
 });

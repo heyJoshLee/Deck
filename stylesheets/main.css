@@ -1,74 +1,89 @@
-body {
-  background: rgba(100, 100, 200, 1);
-  font-family: Arial, sans-serif;
-  color: rgba(250, 250, 250, 1);
-  letter-spacing: 2px;
-}
+@import url("normalize.css");
 
-main {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-a {
-  text-decoration: none;
-}
-
-section {
-  height: 400px;
-  background: snow;
-  border-radius: 10px;
-  color: rgba(100, 100, 200, 1);
-  padding: 10px 20%;
-}
-
-header {
-  text-align: center;
-  margin: 0 auto;
-}
-
-header h1 {
-  font-size: 46px;
-}
-
-li {
-  padding: 10px 0 0 0;
-  margin: 10px;
-}
-
-li + li {
-  border-top: 1px solid black;
-}
-
-form {
-  text-align: center;
-}
-
-input[type="text"] {
-  width: 380px;
-  height: 50px;
-  border-radius: 10px;
-  font-size: 32px;
-  padding: 5px;
-  color: rgba(100, 100, 200, 1);
-
-}
-
-input[type="submit"] {
-  margin: 10px auto;
-  width: 200px;
-  height: 50px;
-  background: rgb(19, 247, 57);
-  border-radius: 10px;
-  border: none;
-  color: white;
-  font-size: 24px;
-}
-
-input[type="submit"]:hover {
+a:hover {
   cursor: pointer;
 }
 
-a.remove {
-  float: right;
+html, body {
+  height: 100%;
+}
+
+main {
+  margin: 0;
+  padding: 20px;
+  height: 100%;
+  background: linear-gradient( to bottom, rgba(240, 240, 240, 0.8), rgba(220, 220, 220, 1) );
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.length {
+  margin-left: 20px;
+  display: inline-block;
+  position: relative;
+  font-size: 32px;
+  bottom: 200px;
+}
+
+p {
+  display: inline-block;
+  position: relative;
+  bottom: 170px;
+  font-size: 20px;
+  margin-left: -50px;
+}
+
+ol {
+  display: inline-block;
+  position: relative;
+  left: 500px;
+  bottom: 340px;
+}
+
+#show h2 {
+  display: inherit;
+}
+
+.buttons {
+  position: absolute;
+  top: 400px;}
+
+.cardlist {
+  font-size: 20px;
+  width: 320px;
+  height: 450px;
+  overflow: scroll;
+}
+
+.cardlist li{
+  padding: 10px;
+}
+.cardlist li + li {
+  margin-top: 5px;
+}
+
+.cardlist li:nth-child(2n) {
+  background: rgba(20, 20, 20, 0.2);
+}
+
+.buttons a {
+  width: 140px;
+  font-size: 18px;
+  font-style: bold;
+  padding: 15px 10px;
+  border: 1px solid black;
+  margin-right: 20px;
+  border-radius: 3px;
+  color: white;
+  text-transform: uppercase;
+}
+
+#draw_card {
+  background: linear-gradient(to bottom, rgba(10, 180, 10, 0.8), rgba(10, 130, 10, 1));
+}
+
+#shuffle {
+  background: linear-gradient(to bottom, rgba(200, 150, 10, 0.8), rgba(200, 120, 10, 1));
 }
